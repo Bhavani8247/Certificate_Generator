@@ -41,8 +41,10 @@ app.delete("/delete/:id", (req, res) => {
         message: "Deleted Successfully"
     });
 });
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
 
-    console.log("Server Running On Port 5000");
+    console.log(`Server Running On Port ${PORT}`);
+
 });
