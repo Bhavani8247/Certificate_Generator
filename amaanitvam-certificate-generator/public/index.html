@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+    <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+    rel="stylesheet">
+
+</head>
+
+<body>
+
+<script>
+
+    if(localStorage.getItem("loggedIn") != "true"){
+
+        window.location.href = "/login.html";
+    }
+
+</script>
+
+<div class="container">
+
+    <div class="top-bar">
+
+        <h1>Amaanitvam Foundation</h1>
+
+        <div>
+
+            <a href="/admin.html">
+
+                <button class="top-btn">
+                    Admin Dashboard
+                </button>
+
+            </a>
+
+            <button
+            onclick="logout()"
+            class="logout-btn">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="hero">
+
+        <p>
+            Automated Certificate Generator System
+        </p>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Generate Certificate</h2>
+
+        <input
+        type="text"
+        id="name"
+        placeholder="Enter Name">
+
+        <input
+        type="text"
+        id="role"
+        placeholder="Enter Role">
+
+        <input
+        type="text"
+        id="event"
+        placeholder="Enter Event / Internship">
+
+        <input
+        type="date"
+        id="date">
+
+        <button onclick="generateCertificate()">
+            Generate Certificate
+        </button>
+
+    </div>
+
+    <div id="certificate">
+
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="watermark">
+            AMF
+        </div>
+
+        <div class="certificate-content">
+
+            <p class="org-name">
+                AMAANITVAM FOUNDATION
+            </p>
+
+            <div class="top-design">
+
+                <span></span>
+
+                ✦
+
+                <span></span>
+
+            </div>
+
+            <h2 class="certificate-title">
+                CERTIFICATE OF COMPLETION
+            </h2>
+
+            <div class="top-design">
+
+                <span></span>
+
+                ✦
+
+                <span></span>
+
+            </div>
+
+            <p class="sub-text">
+
+                This certificate is proudly awarded to
+
+            </p>
+
+            <h1
+            class="recipient-name"
+            id="certName">
+
+                Recipient Name
+
+            </h1>
+
+            <div class="mini-line"></div>
+
+            <p class="sub-text">
+
+                For successfully completing
+
+            </p>
+
+            <h3 id="certEvent">
+
+                
+
+            </h3>
+
+            <p class="certificate-text">
+
+                In recognition of outstanding participation,
+                dedication, and successful completion
+                of the program.
+
+            </p>
+
+            <div class="details-row">
+
+                <div class="detail-box">
+
+                    <div class="detail-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="detail-label">
+                            ROLE
+                        </p>
+
+                        <p id="certRole">
+                            
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="detail-divider"></div>
+
+                <div class="detail-box">
+
+                    <div class="detail-icon">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="detail-label">
+                            DATE
+                        </p>
+
+                        <p id="certDate">
+                            
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="footer-line"></div>
+
+            <div class="certificate-footer">
+
+                <p id="certId">
+
+                    Certificate ID: AMF2026-1
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="badge">
+
+            ★
+
+        </div>
+
+        <div class="signature-section">
+
+            <div class="signature-box">
+
+                <h2 class="fake-signature">
+
+                    Arjun Mehta
+
+                </h2>
+
+                <hr>
+
+                <p>COORDINATOR</p>
+
+            </div>
+
+            <div class="signature-box">
+
+                <h2 class="fake-signature">
+
+                    Sophia Williams
+
+                </h2>
+
+                <hr>
+
+                <p>DIRECTOR</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <button
+    onclick="downloadPDF()"
+    class="download-btn">
+
+        Download PDF
+
+    </button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

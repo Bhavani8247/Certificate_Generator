@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up</title>
+
+    <link rel="stylesheet" href="style.css">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-box">
+
+            <h1>Create Account</h1>
+
+            <input
+                type="text"
+                id="signupUsername"
+                placeholder="Enter Username"
+            >
+
+            <input
+                type="password"
+                id="signupPassword"
+                placeholder="Enter Password"
+            >
+
+            <button onclick="signup()">
+                Sign Up
+            </button>
+
+            <p>
+                Already have an account?
+                <a href="/login.html">
+                    Login
+                </a>
+            </p>
+
+            <p id="signupMessage"></p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function signup(){
+
+            const username =
+                document.getElementById(
+                    "signupUsername"
+                ).value;
+
+            const password =
+                document.getElementById(
+                    "signupPassword"
+                ).value;
+
+            if(username === "" || password === ""){
+
+                document.getElementById(
+                    "signupMessage"
+                ).innerText =
+                "Please fill all fields";
+
+                return;
+            }
+
+            let users =
+                JSON.parse(
+                    localStorage.getItem("users")
+                ) || [];
+
+            const userExists =
+                users.find(
+                    user =>
+                    user.username === username
+                );
+
+            if(userExists){
+
+                document.getElementById(
+                    "signupMessage"
+                ).innerText =
+                "Username already exists";
+
+                return;
+            }
+
+            users.push({
+                username,
+                password
+            });
+
+            localStorage.setItem(
+                "users",
+                JSON.stringify(users)
+            );
+
+            document.getElementById(
+                "signupMessage"
+            ).innerText =
+            "Account Created Successfully";
+
+            setTimeout(() => {
+
+                window.location.href =
+                "/login.html";
+
+            }, 1000);
+        }
+
+    </script>
+
+</body>
+
+</html>

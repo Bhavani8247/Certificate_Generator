@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+<link
+href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+rel="stylesheet">
+</head>
+
+<body>
+
+    <script>
+
+        if(localStorage.getItem("loggedIn") != "true"){
+
+            window.location.href = "/login.html";
+        }
+
+    </script>
+
+    <div class="container">
+
+        <div class="admin-header">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>Manage generated certificates</p>
+
+        </div>
+
+        <div class="stats-box">
+
+            <div class="card">
+
+                <h2 id="totalCertificates">0</h2>
+
+                <p>Total Certificates</p>
+
+            </div>
+
+        </div>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search by Name"
+            onkeyup="searchCertificates()"
+        >
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Role</th>
+
+                    <th>Event</th>
+
+                    <th>Date</th>
+
+                    <th>Certificate ID</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tableData">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <script>
+
+        let certificates = [];
+
+        async function loadCertificates(){
+
+            const response =
+                await fetch("/certificates");
+
+            certificates =
+                await response.json();
+
+            document.getElementById(
+                "totalCertificates"
+            ).innerText = certificates.length;
+
+            displayCertificates(certificates);
+        }
+
+        function displayCertificates(data){
+
+            let rows = "";
+
+            data.forEach((item) => {
+
+                rows += `
+
+                    <tr>
+
+                        <td>${item.name}</td>
+
+                        <td>${item.role}</td>
+
+                        <td>${item.event}</td>
+
+                        <td>${item.date}</td>
+
+                        <td>${item.certificateId}</td>
+
+                        <td>
+
+                            <button
+                                onclick="deleteCertificate('${item.id}')"
+                                class="delete-btn"
+                            >
+                                Delete
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+            });
+
+            document.getElementById(
+                "tableData"
+            ).innerHTML = rows;
+        }
+
+        async function deleteCertificate(id){
+
+            await fetch(`/delete/${id}`, {
+
+                method: "DELETE"
+
+            });
+
+            loadCertificates();
+        }
+
+        function searchCertificates(){
+
+            const searchValue =
+                document.getElementById("search")
+                .value
+                .toLowerCase();
+
+            const filtered =
+                certificates.filter((item) =>
+
+                    item.name
+                    .toLowerCase()
+                    .includes(searchValue)
+
+                );
+
+            displayCertificates(filtered);
+        }
+
+        loadCertificates();
+
+    </script>
+
+</body>
+
+</html>
